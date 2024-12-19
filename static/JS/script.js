@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
 
         const checkboxes = document.querySelectorAll('.checkbox-cliente:checked');
-        
+
         if (checkboxes.length > 0) {
             alert('Se envio correctanente')
-            
+
             formulario.submit();
         } else {
             alert('Hubo un error')

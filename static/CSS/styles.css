@@ -21,10 +21,24 @@ body {
 .encabezado {
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 150px;
+    justify-content: space-around;
+    height: 200px;
     padding: 25px;
     background-color: var(--fondo);
+    margin-bottom: 120px;
+}
+
+.titulo {
+    color: var(--rojo);
+    font-size: 88px;
+}
+
+.parrafo {
+    color: var(--oscuro);
+}
+
+.subencabezado {
+    text-align: center;
 }
 
 .logo {
@@ -41,7 +55,6 @@ body {
     width: 47%;
     margin: 20px;
 }
-
 
 .seleccionar-clientes,
 .enviar-mensaje {
@@ -91,8 +104,30 @@ textarea.campo-texto {
     margin-top: 10px;
 }
 
+.clientes::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.clientes::-webkit-scrollbar-thumb {
+    background-color: var(--azul);
+    border-radius: 5px;
+}
+
+.clientes::-webkit-scrollbar-track {
+    background-color: var(--fondo);
+    border-radius: 5px;
+}
+
+.clientes::-webkit-scrollbar-thumb:hover {
+    background-color: var(--rojo);
+
+}
+
+
 .lista-clientes {
     list-style: none;
+    text-align: left;
 }
 
 .lista-clientes li {
@@ -206,4 +241,50 @@ button[type="submit"]:hover {
     color: var(--oscuro);
     padding: 3px;
     background-color: var(--blanco);
+}
+
+/* Estilo para los selects */
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid var(--gris);
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    font-size: 14px;
+}
+
+select:focus {
+    border-color: var(--azul);
+    outline: none;
+}
+
+/* Estilo para el input de tipo file */
+input[type="file"] {
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid var(--gris);
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    font-size: 14px;
+}
+
+input[type="file"]:focus {
+    border-color: var(--azul);
+    outline: none;
+}
+
+input[type="image"] {
+    border: 1px solid var(--gris);
+    border-radius: 5px;
+    padding: 8px;
+    background-color: var(--fondo);
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+
+input[type="image"]:focus {
+    border-color: var(--azul);
+    outline: none;
 }

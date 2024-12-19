@@ -4,17 +4,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PythonMail - DMD</title>
+  <title>Marketing Digital - DMD</title>
   <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
   <script src="{{ url_for('static', filename='JS/seleccionar.js') }}"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="{{ url_for('static', filename='CSS/styles.css') }}" rel="stylesheet" />
   <link rel="icon" href="{{ url_for('static', filename='IMG/Logo2.png') }}" type="image/x-icon">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.2/xlsx.full.min.js"></script>
+  <!-- Librería para procesar Excel -->
+  <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
+  <link href="{{ url_for('static', filename='CSS/styles.css') }}" rel="stylesheet" />
 </head>
 
 <body>
   <header class="encabezado">
     <img src="../static/IMG/Logo.png" alt="logo_dmd" class="logo">
+    <div class="subencabezado">
+      <h1 class="titulo">Marketing Digital</h1>
+      <p class="parrafo">Importa Excel, envía múltiples correos, agrega clientes y gestiónalos de manera rápida y
+        eficiente.</p>
+    </div>
+
+
   </header>
 
   <main class="contenido">
@@ -26,7 +37,7 @@
         <div class="contenido-caja">
           <form method="POST" id="formulario-correos">
             <label>
-              <input type="checkbox" id="seleccionar-todo"> Seleccionar todo
+              <input type="checkbox" id="seleccionar-todo" style="background-color: green;"> Seleccionar todo
             </label>
 
             <div class="clientes">
@@ -86,29 +97,30 @@
         </div>
 
       </div>
+
       <div class="contenido-seccion">
         <div class="encabezado-caja">
-          <h3 class="subtitulo">Transformador:</h3>
+          <h3 class="subtitulo">Cargar Excel para Agregar Clientes</h3>
         </div>
         <div class="contenido-caja">
-          <form action="/cargar_excel" method="POST" enctype="multipart/form-data">
+          <form id="form-cargar-excel" method="POST" action="/agregar_clientes_excel" enctype="multipart/form-data">
             <label for="archivo">Seleccionar archivo Excel:</label><br>
             <input type="file" name="archivo" id="archivo" accept=".xlsx,.xls" required><br><br>
 
-            <label for="columna_nombre">Nombre de la columna Nombre:</label><br>
-            <input type="text" name="columna_nombre" id="columna_nombre" required><br><br>
+            <label for="columna_nombre">Seleccionar columna de Nombre:</label><br>
+            <select id="columna_nombre" name="columna_nombre" required></select><br><br>
 
-            <label for="columna_email">Nombre de la columna Email:</label><br>
-            <input type="text" name="columna_email" id="columna_email" required><br><br>
+            <label for="columna_email">Seleccionar columna de Correo:</label><br>
+            <select id="columna_email" name="columna_email" required></select><br><br>
 
-            <button type="submit" class="btn">Cargar Excel</button>
+            <button type="submit" class="btn">Agregar Clientes</button>
           </form>
         </div>
       </div>
 
     </section>
 
-
+    <!-- Modal de confirmación de eliminación de cliente -->
     <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
@@ -127,6 +139,7 @@
       </div>
     </div>
 
+    <!-- Modal de edición de cliente -->
     <div id="editModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
@@ -145,8 +158,8 @@
       </div>
     </div>
 
-
   </main>
+  <script src="{{ url_for('static', filename='JS/excel.js') }}"></script>
   <script src="{{ url_for('static', filename='JS/modal.js') }}"></script>
 </body>
 
