@@ -1,0 +1,26 @@
+{
+    "clientes": [
+        {"nombre": "Damian2", "correo": "47058200@insi.edu.ar"},
+        {"nombre": "Damian", "correo": "damian@insi.edu.ar"},
+        {"nombre": "Carlos Martinez", "correo": "carlos.martinez1@gmail.com"},
+        {"nombre": "Ana Perez", "correo": "ana.perez2@gmail.com"},
+        {"nombre": "Jose Lopez", "correo": "jose.lopez3@gmail.com"},
+        {"nombre": "Maria Garcia", "correo": "maria.garcia4@gmail.com"},
+        {"nombre": "Juan Rodriguez", "correo": "juan.rodriguez5@gmail.com"},
+        {"nombre": "Laura Sanchez", "correo": "laura.sanchez6@gmail.com"},
+        {"nombre": "Pedro Fernandez", "correo": "pedro.fernandez7@gmail.com"},
+        {"nombre": "Luis Gonzalez", "correo": "luis.gonzalez8@gmail.com"},
+        {"nombre": "Marta Lopez", "correo": "marta.lopez9@gmail.com"},
+        {"nombre": "Raul Perez", "correo": "raul.perez10@gmail.com"},
+        {"nombre": "Sandra Diaz", "correo": "sandra.diaz11@gmail.com"},
+        {"nombre": "Francisco Garcia", "correo": "francisco.garcia12@gmail.com"},
+        {"nombre": "Patricia Rodriguez", "correo": "patricia.rodriguez13@gmail.com"},
+        {"nombre": "Jose Maria Sanchez", "correo": "josemaria.sanchez14@gmail.com"},
+        {"nombre": "Isabel Gonzalez", "correo": "isabel.gonzalez15@gmail.com"},
+        {"nombre": "Javier Ruiz", "correo": "javier.ruiz16@gmail.com"},
+        {"nombre": "Carmen Romero", "correo": "carmen.romero17@gmail.com"},
+        {"nombre": "David Martinez", "correo": "david.martinez18@gmail.com"},
+        {"nombre": "Raquel Torres", "correo": "raquel.torres19@gmail.com"},
+        {"nombre": "Antonio Hernandez", "correo": "antonio.hernandez20@gmail.com"}
+    ]
+}

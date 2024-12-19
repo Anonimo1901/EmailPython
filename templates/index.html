@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Correos</title>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script src="{{ url_for('static', filename='seleccionar.js') }}"></script>
+  <script src="{{ url_for('static', filename='alerta.js') }}"></script>
+  <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="encabezado">
+    <img src="../static/Logo.png" alt="logo_dmd" class="logo">
+    <h1>Enviar Correos a Clientes</h1>
+  </header>
+
+  <main class="contenido">
+    <section class="seccion">
+      <div class="contenido-seccion">
+        <form method="POST" id="formulario-correos">
+          <h3 class="subtitulo">Clientes:</h3>
+          <label>
+            <input type="checkbox" id="seleccionar-todo"> Seleccionar todo
+          </label> 
+          <div class="clientes">
+            <ul class="lista-clientes">
+              {% for cliente in clientes %}
+              <li>
+                <input type="checkbox" name="clientes" value="{{ cliente.correo }}" class="checkbox-cliente" />
+                {{ cliente.nombre }}: {{ cliente.correo }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+      </div>
+      <div class="contenido-seccion">
+        <h3 class="subtitulo">Enviar un mensaje</h3>
+        <label for="asunto">Asunto:</label><br>
+        <input class="campo-texto" type="text" name="asunto" id="asunto" required /><br /><br />
+        <label for="mensaje">Mensaje:</label><br>
+        <textarea class="campo-texto name=" mensaje" id="mensaje" rows="4" cols="50" required></textarea>
+        <br /><br />
+
+        <button class="btn" type="submit">Enviar Correo</button>
+        </form>
+        <h3 class="subtitulo">Agregar Nuevo Cliente:</h3>
+        <form method="POST" action="/agregar_cliente">
+          <label for="nombre">Nombre:</label><br>
+          <input class="campo-texto" type="text" name="nombre" id="nombre" required /><br>
+          <label for="correo">Correo:</label><br>
+          <input class="campo-texto" type="email" name="correo" id="correo" required />
+          <br><br>
+          <button type="submit" class="btn">Agregar Cliente</button>
+        </form>
+      </div> 
+
+
+
+
+    </section>
+  </main>
+
+</body>
+
+</html>

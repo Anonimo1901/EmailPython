@@ -1,0 +1,62 @@
+*{
+    font-family: Arial;
+}
+
+:root{
+    --rojo: #ae0d24;
+    --azul: #146597;
+    --gris: #b1b3b4;
+    --blanco: #fff;
+}
+.encabezado{
+    display: flex;
+    height: 100px;
+    text-align: center;
+    padding: 25px;
+    background-color: var(--blanco);
+}
+.logo{
+    height: 100%;
+}
+.clientes{
+    height: 350px;
+    overflow: auto;
+    
+}
+.lista-clientes{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.seccion{
+    margin: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.contenido-seccion{
+    width: 100%;
+    margin: 25px;
+padding: 25px;
+}
+.btn{
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: var(--azul);
+    color: var(--blanco);
+    transition: 0.3s;
+}
+.btn:hover{
+    background-color: var(--rojo);
+
+}
+.campo-texto{
+width: 80%;
+padding: 5px;
+}
+.subtitulo{
+    background-color: var(--azul);
+    padding: 15px;
+    color: var(--blanco);
+}
