@@ -1,0 +1,7 @@
+Descripción:
+Cómo lo hice?
+Qué funciones use?
+Herraminetas
+Objetivo
+
+- config.py: Configuraciónes del correo

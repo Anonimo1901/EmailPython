@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalEliminar = document.getElementById('myModal');
     const modalEditar = document.getElementById('editModal');
 
-    // Elementos para cerrar modales
+    // Elementos para cerrar los modales
     const spanEliminar = document.getElementsByClassName('close')[0];
     const spanEditar = document.getElementsByClassName('close')[1];
 
@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('correo-cliente').value = correo;
             document.getElementById('correo-cliente-hidden').value = correo;
 
+            // Mostrar modal de eliminación
             modalEliminar.style.display = 'block';
         });
     });
@@ -39,18 +40,22 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('correo-cliente-edit').value = correo;
             document.getElementById('correo-cliente-hidden-edit').value = correo;
 
+            // Mostrar modal de edición
             modalEditar.style.display = 'block';
         });
     });
 
-    // Cerrar los modales al hacer click en la "X" o fuera del modal
+    // Cerrar el modal de eliminación
     spanEliminar.onclick = function () {
         modalEliminar.style.display = 'none';
     };
+
+    // Cerrar el modal de edición
     spanEditar.onclick = function () {
         modalEditar.style.display = 'none';
     };
 
+    // Cerrar modales si se hace click fuera de ellos
     window.onclick = function (event) {
         if (event.target === modalEliminar) {
             modalEliminar.style.display = 'none';
