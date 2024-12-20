@@ -3,17 +3,17 @@ import json
 import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mail import Mail, Message
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 
-# Configuración del correo (si decides usarlo)
 app.config['SECRET_KEY'] = os.urandom(24)
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 
-# Cargar las credenciales del correo desde un archivo de configuración
 with open('config.json', 'r') as file:
     config = json.load(file)
 
@@ -22,7 +22,6 @@ app.config['MAIL_PASSWORD'] = config['contrasena']
 
 mail = Mail(app)
 
-# Cargar los clientes desde el archivo JSON
 def cargar_clientes():
     if os.path.exists('clientes.json'):
         with open('clientes.json', 'r') as file:
@@ -30,12 +29,10 @@ def cargar_clientes():
     else:
         return []
 
-# Guardar los clientes en el archivo JSON
 def guardar_clientes(clientes):
     with open('clientes.json', 'w') as file:
         json.dump({'clientes': clientes}, file, indent=4)
 
-# Ruta principal
 @app.route('/')
 def index():
     clientes = cargar_clientes()
@@ -50,18 +47,15 @@ def index():
 
     return render_template('index.html', clientes=clientes, mensaje=mensaje, tipo_mensaje=tipo_mensaje)
 
-# Ruta para agregar clientes desde un archivo Excel
 @app.route('/agregar_clientes_excel', methods=['POST'])
 def agregar_clientes_excel():
     archivo = request.files['archivo']
     columna_nombre = request.form['columna_nombre']
     columna_email = request.form['columna_email']
-    
-    # Leer el archivo Excel usando pandas
+
     df = pd.read_excel(archivo)
     clientes = cargar_clientes()
 
-    # Agregar los nuevos clientes
     for _, row in df.iterrows():
         cliente = {
             "nombre": row[columna_nombre],
@@ -76,7 +70,6 @@ def agregar_clientes_excel():
 
     return redirect(url_for('index'))
 
-# Ruta para agregar un cliente manualmente
 @app.route('/agregar_cliente', methods=['POST'])
 def agregar_cliente():
     nombre = request.form['nombre']
@@ -84,7 +77,6 @@ def agregar_cliente():
 
     clientes = cargar_clientes()
 
-    # Verificar si el correo ya está registrado
     for cliente in clientes:
         if cliente['correo'] == correo:
             session['mensaje'] = 'Este correo ya está registrado.'
@@ -99,7 +91,6 @@ def agregar_cliente():
 
     return redirect(url_for('index'))
 
-# Ruta para eliminar un cliente
 @app.route('/eliminar_cliente', methods=['POST'])
 def eliminar_cliente():
     correo = request.form['correo_eliminar']
@@ -164,14 +155,39 @@ def editar_cliente():
         return redirect(url_for('index'))
 
 # Función para enviar correos (opcional)
-def enviar_correos(correos, asunto, mensaje):
+def enviar_correos(correos, asunto, mensaje, archivo_imagen=None):
     for correo in correos:
         msg = Message(asunto, sender=app.config['MAIL_USERNAME'], recipients=[correo])
         msg.body = mensaje
+
+        # Verificar si se ha adjuntado una imagen
+        if archivo_imagen:
+            # Adjuntar la imagen
+            msg.attach(archivo_imagen.filename, archivo_imagen.content_type, archivo_imagen.read())
+
         try:
             mail.send(msg)
         except Exception as e:
             print(f"Error enviando correo a {correo}: {str(e)}")
+
+@app.route('/enviar_correos', methods=['POST'])
+def enviar_correos_route():
+    # Obtener los datos del formulario
+    asunto = request.form['asunto']
+    mensaje = request.form['mensaje']
+    correos_seleccionados = request.form.getlist('clientes')  # Lista de correos seleccionados
+    imagen = request.files.get('imagen')  # Obtener la imagen si fue seleccionada
+
+    # Llamar a la función de enviar correos
+    if imagen:
+        enviar_correos(correos_seleccionados, asunto, mensaje, imagen)
+    else:
+        enviar_correos(correos_seleccionados, asunto, mensaje)
+
+    session['mensaje'] = 'Correos enviados correctamente.'
+    session['tipo_mensaje'] = 'success'
+
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)

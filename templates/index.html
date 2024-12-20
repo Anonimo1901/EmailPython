@@ -11,9 +11,6 @@
   <link href="{{ url_for('static', filename='CSS/styles.css') }}" rel="stylesheet" />
   <link rel="icon" href="{{ url_for('static', filename='IMG/Logo2.png') }}" type="image/x-icon">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.2/xlsx.full.min.js"></script>
-  <!-- Librería para procesar Excel -->
-  <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
-  <link href="{{ url_for('static', filename='CSS/styles.css') }}" rel="stylesheet" />
 </head>
 
 <body>
@@ -23,7 +20,9 @@
       <h1 class="titulo">Marketing Digital</h1>
       <p class="parrafo">Importa Excel, envía múltiples correos, agrega clientes y gestiónalos de manera rápida y
         eficiente.</p>
+
     </div>
+
 
 
   </header>
@@ -35,9 +34,10 @@
           <h3 class="subtitulo">Lista de Clientes:</h3>
         </div>
         <div class="contenido-caja">
-          <form method="POST" id="formulario-correos">
+          <form method="POST" id="formulario-correos" enctype="multipart/form-data"
+            action="{{ url_for('enviar_correos_route') }}">
             <label>
-              <input type="checkbox" id="seleccionar-todo" style="background-color: green;"> Seleccionar todo
+              <input type="checkbox" id="seleccionar-todo"> Seleccionar todo
             </label>
 
             <div class="clientes">
@@ -68,14 +68,19 @@
         <div class="contenido-caja">
           <label for="asunto">Asunto:</label><br>
           <input class="campo-texto" type="text" name="asunto" id="asunto" required /><br /><br />
+
           <label for="mensaje">Mensaje:</label><br>
-          <textarea class="campo-texto" name="mensaje" id="mensaje" rows="4" cols="50" required></textarea>
-          <br /><br />
-          <button class="btn" type="submit">Enviar Correo</button>
-          </form>
+          <textarea class="campo-texto" name="mensaje" id="mensaje" rows="4" cols="50" required></textarea><br /><br />
+
+          <label for="imagen">Seleccionar imagen:</label><br>
+          <input type="file" name="imagen" id="imagen" accept="image/*"><br><br />
+
+          <button class="btn" type="submit"><i class="fa-solid fa-envelope"></i> Enviar Correo</button>
         </div>
       </div>
+      </form>
     </section>
+
 
     <section class="seccion">
       <!-- Formulario para agregar un nuevo cliente -->
@@ -100,7 +105,7 @@
 
       <div class="contenido-seccion">
         <div class="encabezado-caja">
-          <h3 class="subtitulo">Cargar Excel para Agregar Clientes</h3>
+          <h3 class="subtitulo">Importar Excel</h3>
         </div>
         <div class="contenido-caja">
           <form id="form-cargar-excel" method="POST" action="/agregar_clientes_excel" enctype="multipart/form-data">
