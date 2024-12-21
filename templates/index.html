@@ -7,27 +7,22 @@
   <title>Marketing Digital - DMD</title>
   <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
   <script src="{{ url_for('static', filename='JS/seleccionar.js') }}"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="{{ url_for('static', filename='CSS/styles.css') }}" rel="stylesheet" />
   <link rel="icon" href="{{ url_for('static', filename='IMG/Logo2.ico') }}" type="image/x-icon">
+  <script src="{{url_for('static', filename='JS/icons.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.2/xlsx.full.min.js"></script>
-  <!-- Librería para procesar Excel -->
-  <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
-  <link href="{{ url_for('static', filename='CSS/styles.css') }}" rel="stylesheet" />
 </head>
 
 <body>
+
   <header class="encabezado">
-    <img src="../static/IMG/Logo.png" alt="logo_dmd" class="logo">
+    <img src="{{ url_for('static', filename='IMG/Logo.png') }}" alt="logo_dmd" class="logo">
     <div class="subencabezado">
       <h1 class="titulo">Marketing Digital</h1>
-      <p class="parrafo">Importa Excel, envía múltiples correos, agrega clientes y gestiónalos de manera rápida y
+      <p class="parrafo">Gestiona clientes, envía mensajes, agrega contactos y gestionarlos de manera rápida y
         eficiente.</p>
-
     </div>
-
-
-
   </header>
 
   <main class="contenido">
@@ -36,8 +31,8 @@
         <div class="encabezado-caja">
           <h3 class="subtitulo">Lista de Clientes:</h3>
         </div>
-        <div class="contenido-caja">
-          <form method="POST" id="formulario-correos" enctype="multipart/form-data"
+        <div class="contenido-caja left">
+          <form class="formularios" method="POST" id="formulario-correos" enctype="multipart/form-data"
             action="{{ url_for('correo.enviar_correos_route') }}">
             <label>
               <input type="checkbox" id="seleccionar-todo"> Seleccionar todo
@@ -51,11 +46,11 @@
                   {{ cliente.nombre }}: {{ cliente.correo }}
                   <button class="btn-editar" type="button" data-nombre="{{ cliente.nombre }}"
                     data-correo="{{ cliente.correo }}">
-                    <i class="fas fa-pencil-alt"></i>
+                    <i class="icono" data-lucide="pencil"></i>
                   </button>
                   <button type="button" class="btn-eliminar" data-nombre="{{ cliente.nombre }}"
                     data-correo="{{ cliente.correo }}">
-                    <i class="fas fa-trash-alt"></i>
+                    <i class="icono" data-lucide="trash"></i>
                   </button>
                 </li>
                 {% endfor %}
@@ -69,55 +64,72 @@
           <h3 class="subtitulo">Enviar un mensaje:</h3>
         </div>
         <div class="contenido-caja">
-          <label for="asunto">Asunto:</label><br>
-          <input class="campo-texto" type="text" name="asunto" id="asunto" required /><br /><br />
 
-          <label for="mensaje">Mensaje:</label><br>
-          <textarea class="campo-texto" name="mensaje" id="mensaje" rows="4" cols="50" required></textarea><br /><br />
+          <div class="input-container">
+            <label for="asunto">Asunto:</label><br>
+            <input placeholder="Escriba el asunto acá..." class="campo-texto" type="text" name="asunto" id="asunto"
+              required />
+            <label for="mensaje">Mensaje:</label><br>
+            <textarea placeholder="Escriba su mensaje acá..." class="campo-texto" name="mensaje" id="mensaje" rows="4"
+              cols="50" required></textarea><br /><br />
+            <div class="file-input-container">
+              <span id="file-name-image" style="display:none;">Ningún archivo seleccionado</span>
+              <input type="file" name="imagen" id="imagen" accept="image/*" class="input-files" />
+              <label for="imagen" class="file-upload-label">
+                <i data-lucide="paperclip"></i>
+              </label>
+              <button class="btn enviar" type="submit">
+                <i data-lucide="send"></i>
+              </button>
+            </div>
 
-          <label for="imagen">Seleccionar imagen:</label><br>
-          <input type="file" name="imagen" id="imagen" accept="image/*"><br><br />
 
-          <button class="btn" type="submit"><i class="fa-solid fa-envelope"></i> Enviar Correo</button>
+          </div>
+
+          </form>
         </div>
-      </div>
-      </form>
-      </div>
       </div>
     </section>
 
     <section class="seccion">
-      <!-- Formulario para agregar un nuevo cliente -->
       <div class="contenido-seccion agregar-cliente">
         <div class="encabezado-caja">
-          <h3 class="subtitulo">Agregar Nuevo Cliente:</h3>
+          <h3 class="subtitulo">Agregar un cliente:</h3>
         </div>
         <div class="contenido-caja">
-          <form method="POST" action="{{ url_for('clientes.agregar_cliente') }}">
-            <label for="nombre">Nombre:</label><br>
-            <input class="campo-texto" type="text" name="nombre" id="nombre" required /><br>
+          <p></p>
+          <form class="formularios" method="POST" action="{{ url_for('clientes.agregar_cliente') }}">
+            <label for="nombre">Nombre del cliente:</label><br>
+            <input placeholder="Nombre del cliente" class="campo-texto" type="text" name="nombre" id="nombre"
+              required /><br>
 
-            <label for="correo">Correo:</label><br>
-            <input class="campo-texto" type="email" name="correo" id="correo" required /><br><br>
+            <label for="correo">Dirección de correo:</label><br>
+            <input placeholder="Correo@gmail.com" class="campo-texto" type="email" name="correo" id="correo"
+              required /><br><br>
 
             <button type="submit" class="btn">Agregar Cliente</button>
           </form>
         </div>
-
       </div>
 
       <div class="contenido-seccion">
         <div class="encabezado-caja">
-          <h3 class="subtitulo">Importar Excel</h3>
+          <h3 class="subtitulo">Importar desde Excel</h3>
         </div>
         <div class="contenido-caja">
-          <form id="form-cargar-excel" method="POST" action="{{ url_for('excel.agregar_clientes_excel') }}"
-            enctype="multipart/form-data">
+          <form class="formularios" id="form-cargar-excel" method="POST"
+            action="{{ url_for('excel.agregar_clientes_excel') }}" enctype="multipart/form-data">
+            <label for="archivo">Seleccionar archivo Excel:</label><br><br>
+            <label class="file-upload-label excel" for="archivo">
+              <i data-lucide="import"></i>
+            </label>
 
-            <label for="archivo">Seleccionar archivo Excel:</label><br>
-            <input type="file" name="archivo" id="archivo" accept=".xlsx,.xls" required><br><br>
+            <input class="input-files" type="file" name="archivo" id="archivo" accept=".xlsx,.xls" required><br>
+            <span id="file-name" style="display:none;">Ningún archivo seleccionado</span>
+            <br><br>
 
             <label for="columna_nombre">Seleccionar columna de Nombre:</label><br>
+
             <select id="columna_nombre" name="columna_nombre" required></select><br><br>
 
             <label for="columna_email">Seleccionar columna de Correo:</label><br>
@@ -126,53 +138,47 @@
             <button type="submit" class="btn">Agregar Clientes</button>
           </form>
         </div>
-      </div>
 
+      </div>
     </section>
-
-    <!-- Modal de confirmación de eliminación de cliente -->
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>¿Seguro que deseas eliminar este cliente?</h2>
-
-        <form id="form-eliminar-cliente" method="POST" action="{{ url_for('clientes.eliminar_cliente') }}">
-
-          <label for="cliente-nombre">Cliente:</label><br>
-          <input type="text" id="cliente-nombre" name="cliente_nombre" disabled /><br><br>
-
-          <label for="correo-cliente">Correo a eliminar:</label><br>
-          <input type="email" id="correo-cliente" name="correo_cliente" disabled /><br><br>
-          <input type="hidden" id="correo-cliente-hidden" name="correo_eliminar" value="" />
-
-          <button type="submit" id="confirmar-eliminacion">Confirmar Eliminación</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Modal de edición de cliente -->
+    <!-- Modal Editar -->
     <div id="editModal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Editar Cliente</h2>
-        <form id="form-edit-client" method="POST" action="{{ url_for('clientes.editar_cliente') }}">
 
-          <label for="cliente-nombre-edit">Nombre:</label><br>
-          <input type="text" id="cliente-nombre-edit" name="nombre" required><br><br>
-
-          <label for="correo-cliente-edit">Correo:</label><br>
-          <input type="email" id="correo-cliente-edit" name="correo" required><br><br>
-
-          <input type="hidden" id="correo-cliente-hidden-edit" name="correo_hidden">
-
-          <button type="submit">Editar</button>
+        <h2 class="modal-titulo">Editar Cliente</h2>
+        <form id="form-edit-client">
+          <input type="text" id="cliente-nombre-edit" name="nombre" required>
+          <input type="email" id="correo-cliente-edit" name="correo" required>
+          <input type="hidden" id="correo-cliente-hidden-edit" name="correo-hidden">
+          <div class="btn-modal">
+            <button type="submit">Editar</button>
+            <button type="button" id="cancelar-editar">Cancelar</button>
+          </div>
         </form>
       </div>
     </div>
 
+    <!-- Modal Eliminar -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <h2 class="modal-titulo">Eliminar Cliente</h2>
+        <form id="form-eliminar-cliente">
+          <input type="text" id="cliente-nombre" name="nombre" required>
+          <input type="email" id="correo-cliente" name="correo" required>
+          <input type="hidden" id="correo-cliente-hidden" name="correo-hidden">
+
+          <div class="btn-modal">
+            <button type="submit">Eliminar</button>
+            <button type="button" id="cancelar-eliminar">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
+
   <script src="{{ url_for('static', filename='JS/excel.js') }}"></script>
   <script src="{{ url_for('static', filename='JS/modal.js') }}"></script>
+  <script src="{{ url_for('static', filename='JS/Input.js') }}"></script>
 </body>
 
 </html>
