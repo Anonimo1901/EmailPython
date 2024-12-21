@@ -66,10 +66,8 @@
         <div class="contenido-caja">
 
           <div class="input-container">
-            <label for="asunto">Asunto:</label><br>
             <input placeholder="Escriba el asunto acá..." class="campo-texto" type="text" name="asunto" id="asunto"
               required />
-            <label for="mensaje">Mensaje:</label><br>
             <textarea placeholder="Escriba su mensaje acá..." class="campo-texto" name="mensaje" id="mensaje" rows="4"
               cols="50" required></textarea><br /><br />
             <div class="file-input-container">
@@ -94,16 +92,16 @@
     <section class="seccion">
       <div class="contenido-seccion agregar-cliente">
         <div class="encabezado-caja">
-          <h3 class="subtitulo">Agregar un cliente:</h3>
+          <h3 class="subtitulo">Agregar un cliente</h3>
         </div>
         <div class="contenido-caja">
           <p></p>
           <form class="formularios" method="POST" action="{{ url_for('clientes.agregar_cliente') }}">
-            <label for="nombre">Nombre del cliente:</label><br>
+            <label for="nombre">Nombre del cliente</label><br><br>
             <input placeholder="Nombre del cliente" class="campo-texto" type="text" name="nombre" id="nombre"
               required /><br>
 
-            <label for="correo">Dirección de correo:</label><br>
+            <label for="correo">Dirección de correo</label><br><br>
             <input placeholder="Correo@gmail.com" class="campo-texto" type="email" name="correo" id="correo"
               required /><br><br>
 
@@ -119,7 +117,7 @@
         <div class="contenido-caja">
           <form class="formularios" id="form-cargar-excel" method="POST"
             action="{{ url_for('excel.agregar_clientes_excel') }}" enctype="multipart/form-data">
-            <label for="archivo">Seleccionar archivo Excel:</label><br><br>
+            <label for="archivo">Cargar archivo Excel</label><br><br>
             <label class="file-upload-label excel" for="archivo">
               <i data-lucide="import"></i>
             </label>
@@ -128,11 +126,11 @@
             <span id="file-name" style="display:none;">Ningún archivo seleccionado</span>
             <br><br>
 
-            <label for="columna_nombre">Seleccionar columna de Nombre:</label><br>
+            <label for="columna_nombre">Selecciona la columna de nombres</label><br><br>
 
             <select id="columna_nombre" name="columna_nombre" required></select><br><br>
 
-            <label for="columna_email">Seleccionar columna de Correo:</label><br>
+            <label for="columna_email">Selecciona la columna de correos electrónicos</label><br><br>
             <select id="columna_email" name="columna_email" required></select><br><br>
 
             <button type="submit" class="btn">Agregar Clientes</button>
@@ -141,7 +139,6 @@
 
       </div>
     </section>
-    <!-- Modal Editar -->
     <div id="editModal" class="modal">
       <div class="modal-content">
 
@@ -158,7 +155,6 @@
       </div>
     </div>
 
-    <!-- Modal Eliminar -->
     <div id="myModal" class="modal">
       <div class="modal-content">
         <h2 class="modal-titulo">Eliminar Cliente</h2>
@@ -174,6 +170,7 @@
         </form>
       </div>
     </div>
+    
   </main>
 
   <script src="{{ url_for('static', filename='JS/excel.js') }}"></script>
