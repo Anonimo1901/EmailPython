@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, session, redirect, url_for
+from flask import render_template, Blueprint, request, session, redirect, url_for, jsonify
 import json
 import os
 
@@ -58,65 +58,63 @@ def agregar_cliente():
     return redirect(url_for('clientes.index'))
 
 
-@clientes_bp.route('/eliminar_cliente', methods=['POST'])
-def eliminar_cliente():
-    """Elimina un cliente basado en el correo."""
-    correo = request.form['correo_eliminar']
-
-    clientes = cargar_clientes()
-
-
-    cliente_a_eliminar = None
-    for cliente in clientes:
-        if cliente['correo'] == correo:
-            cliente_a_eliminar = cliente
-            break
-
-    if cliente_a_eliminar:
-        clientes.remove(cliente_a_eliminar)
-        guardar_clientes(clientes)
-        session['mensaje'] = 'Cliente eliminado correctamente.'
-        session['tipo_mensaje'] = 'success'
-    else:
-        session['mensaje'] = 'No se encontró el cliente con ese correo.'
-        session['tipo_mensaje'] = 'error'
-
-    return redirect(url_for('clientes.index'))
+from flask import jsonify
 
 @clientes_bp.route('/editar_cliente', methods=['POST'])
 def editar_cliente():
-    """Edita un cliente (eliminando el anterior y agregando el nuevo)."""
     try:
         nombre = request.form['nombre']
         correo = request.form['correo']
-        correo_oculto = request.form['correo_hidden']
-
+        correo_oculto = request.form['correo-hidden']
 
         clientes = cargar_clientes()
 
-
-        cliente_a_eliminar = None
         for cliente in clientes:
             if cliente['correo'] == correo_oculto:
-                cliente_a_eliminar = cliente
-                break
+                cliente['nombre'] = nombre
+                cliente['correo'] = correo
+                guardar_clientes(clientes)
+                return jsonify({'success': True, 'message': 'Cliente editado correctamente.'})
 
-        if cliente_a_eliminar:
-            clientes.remove(cliente_a_eliminar)
-        else:
-            session['mensaje'] = 'No se encontró el cliente con ese correo.'
-            session['tipo_mensaje'] = 'error'
-            return redirect(url_for('clientes.index'))
+        return jsonify({'success': False, 'message': 'No se encontró el cliente con ese correo.'})
 
-        clientes.append({'nombre': nombre, 'correo': correo})
+    except Exception as e:
+        return jsonify({'success': False, 'message': f'Error al editar el cliente: {str(e)}'})
+
+@clientes_bp.route('/eliminar_cliente', methods=['POST'])
+def eliminar_cliente():
+    try:
+        correo = request.form['correo-hidden']
+        clientes = cargar_clientes()
+
+        for cliente in clientes:
+            if cliente['correo'] == correo:
+                clientes.remove(cliente)
+                guardar_clientes(clientes)
+                return jsonify({'success': True, 'message': 'Cliente eliminado correctamente.'})
+
+        return jsonify({'success': False, 'message': 'No se encontró el cliente con ese correo.'})
+
+    except Exception as e:
+        return jsonify({'success': False, 'message': f'Error al eliminar el cliente: {str(e)}'})
+
+@clientes_bp.route('/eliminar_clientes', methods=['POST'])
+def eliminar_clientes():
+    try:
+        correos_eliminar = request.form.getlist('correos_eliminar')
+        clientes = cargar_clientes()
+        clientes_eliminados = 0
+
+        for correo in correos_eliminar:
+            clientes = [cliente for cliente in clientes if cliente['correo'] != correo]
+            clientes_eliminados += 1
+
         guardar_clientes(clientes)
 
-        session['mensaje'] = 'Cliente editado correctamente.'
-        session['tipo_mensaje'] = 'success'
+        if clientes_eliminados > 0:
+            return jsonify({'success': True, 'message': f'{clientes_eliminados} cliente(s) eliminado(s) correctamente.'})
+        else:
+            return jsonify({'success': False, 'message': 'No se encontraron clientes para eliminar.'})
 
-        return redirect(url_for('clientes.index'))
-
-    except KeyError as e:
-        session['mensaje'] = 'Error al procesar los datos del formulario.'
-        session['tipo_mensaje'] = 'error'
-        return redirect(url_for('clientes.index'))
+    except Exception as e:
+        return jsonify({'success': False, 'message': f'Error al eliminar cliente(s): {str(e)}'})

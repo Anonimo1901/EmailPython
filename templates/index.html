@@ -37,26 +37,25 @@
             <label>
               <input type="checkbox" id="seleccionar-todo"> Seleccionar todo
             </label>
+            <button type="button" id="btn-editar-seleccionado" class="btn btn-icon" disabled><i data-lucide="pencil"></i></button>
+            <button type="button" id="btn-eliminar-seleccionados" class="btn btn-icon" disabled><i data-lucide="trash-2"></i></button>
+
 
             <div class="clientes">
               <ul class="lista-clientes">
                 {% for cliente in clientes %}
                 <li>
                   <input type="checkbox" name="clientes" value="{{ cliente.correo }}" class="checkbox-cliente" />
-                  {{ cliente.nombre }}: {{ cliente.correo }}
-                  <button class="btn-editar" type="button" data-nombre="{{ cliente.nombre }}"
-                    data-correo="{{ cliente.correo }}">
-                    <i class="icono" data-lucide="pencil"></i>
-                  </button>
-                  <button type="button" class="btn-eliminar" data-nombre="{{ cliente.nombre }}"
-                    data-correo="{{ cliente.correo }}">
-                    <i class="icono" data-lucide="trash"></i>
-                  </button>
+                  <span class="cliente-info">{{ cliente.nombre }}: {{ cliente.correo }}</span>
+
+                  {% endfor %}
                 </li>
-                {% endfor %}
               </ul>
             </div>
         </div>
+
+
+      </div>
       </div>
 
       <div class="contenido-seccion enviar-mensaje">
@@ -141,9 +140,8 @@
     </section>
     <div id="editModal" class="modal">
       <div class="modal-content">
-
         <h2 class="modal-titulo">Editar Cliente</h2>
-        <form id="form-edit-client">
+        <form id="form-edit-client" action="{{ url_for('clientes.editar_cliente') }}" method="POST">
           <input type="text" id="cliente-nombre-edit" name="nombre" required>
           <input type="email" id="correo-cliente-edit" name="correo" required>
           <input type="hidden" id="correo-cliente-hidden-edit" name="correo-hidden">
@@ -154,23 +152,37 @@
         </form>
       </div>
     </div>
-
-    <div id="myModal" class="modal">
+    
+    <div id="deleteModalSingle" class="modal">
       <div class="modal-content">
         <h2 class="modal-titulo">Eliminar Cliente</h2>
-        <form id="form-eliminar-cliente">
+        <form id="form-eliminar-cliente" action="{{ url_for('clientes.eliminar_cliente') }}" method="POST">
           <input type="text" id="cliente-nombre" name="nombre" required>
           <input type="email" id="correo-cliente" name="correo" required>
           <input type="hidden" id="correo-cliente-hidden" name="correo-hidden">
-
           <div class="btn-modal">
             <button type="submit">Eliminar</button>
-            <button type="button" id="cancelar-eliminar">Cancelar</button>
+            <button type="button" id="cancelar-eliminar-single">Cancelar</button>
           </div>
         </form>
       </div>
     </div>
     
+    <div id="deleteModalMultiple" class="modal">
+      <div class="modal-content">
+        <h2 class="modal-titulo">Eliminar Cliente(s)</h2>
+        <form id="form-eliminar-clientes" action="{{ url_for('clientes.eliminar_clientes') }}" method="POST">
+          <div id="clientes-a-eliminar" class="clientes-list">
+          </div>
+          <div class="btn-modal">
+            <button type="submit">Eliminar</button>
+            <button type="button" id="cancelar-eliminar-multiple">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+
   </main>
 
   <script src="{{ url_for('static', filename='JS/excel.js') }}"></script>
