@@ -1,7 +1,39 @@
 {
     "clientes": [
         {
-            "nombre": "Damian",
+            "nombre": "controldegestion@dmdcompresores.com",
+            "correo": "dam@ejemplo.com"
+        },
+        {
+            "nombre": "damian",
+            "correo": "47058200@insi.edu.ar"
+        },
+        {
+            "nombre": "damian",
+            "correo": "47058200@insi.edu.ar"
+        },
+        {
+            "nombre": "damian",
+            "correo": "47058200@insi.edu.ar"
+        },
+        {
+            "nombre": "damian",
+            "correo": "47058200@insi.edu.ar"
+        },
+        {
+            "nombre": "damian",
+            "correo": "47058200@insi.edu.ar"
+        },
+        {
+            "nombre": "damian",
+            "correo": "47058200@insi.edu.ar"
+        },
+        {
+            "nombre": "damian",
+            "correo": "47058200@insi.edu.ar"
+        },
+        {
+            "nombre": "damian",
             "correo": "47058200@insi.edu.ar"
         }
     ]

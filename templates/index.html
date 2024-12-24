@@ -171,19 +171,32 @@
     </div>
 
     <div id="deleteModalMultiple" class="modal">
+
       <div class="modal-content">
         <h2 class="modal-titulo">Eliminar Cliente(s)</h2>
-        <form id="form-eliminar-clientes" action="{{ url_for('clientes.eliminar_clientes') }}" method="POST">
-          <div id="clientes-a-eliminar" class="clientes-list">
-          </div>
-          <div class="btn-modal">
-            <button type="submit">Eliminar</button>
-            <button type="button" id="cancelar-eliminar-multiple">Cancelar</button>
-          </div>
-        </form>
+        <div class="modal-contenido">
+          <form id="form-eliminar-clientes" action="{{ url_for('clientes.eliminar_clientes') }}" method="POST">
+            <div id="clientes-a-eliminar" class="clientes-list">
+            </div>
+            <div class="btn-modal">
+              <button type="submit">Eliminar</button>
+              <button type="button" id="cancelar-eliminar-multiple">Cancelar</button>
+            </div>
+          </form>
+
+        </div>
+
       </div>
     </div>
+    <div id="loadingModal" class="loading-modal">
+      <div class="modal-content">
+        <h2 class="modal-titulo">Enviando Mails...</h2>
+        <div class="modal-contenido">
+          <div class="spinner"></div>
+        </div>
 
+      </div>
+    </div>
 
   </main>
 
