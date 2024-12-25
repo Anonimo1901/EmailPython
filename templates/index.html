@@ -143,15 +143,18 @@
     <div id="editModal" class="modal">
       <div class="modal-content">
         <h2 class="modal-titulo">Editar Cliente</h2>
-        <form id="form-edit-client" action="{{ url_for('clientes.editar_cliente') }}" method="POST">
-          <input type="text" id="cliente-nombre-edit" name="nombre" required>
-          <input type="email" id="correo-cliente-edit" name="correo" required>
-          <input type="hidden" id="correo-cliente-hidden-edit" name="correo-hidden">
-          <div class="btn-modal">
-            <button type="submit">Editar</button>
-            <button type="button" id="cancelar-editar">Cancelar</button>
-          </div>
-        </form>
+        <div class="modal-contenido">
+          <form id="form-edit-client" action="{{ url_for('clientes.editar_cliente') }}" method="POST">
+            <input type="text" id="cliente-nombre-edit" name="nombre" required>
+            <input type="email" id="correo-cliente-edit" name="correo" required>
+            <input type="hidden" id="correo-cliente-hidden-edit" name="correo-hidden">
+            <div class="btn-modal">
+              <button type="submit">Editar</button>
+              <button type="button" id="cancelar-editar">Cancelar</button>
+            </div>
+          </form>
+        </div>
+
       </div>
     </div>
 

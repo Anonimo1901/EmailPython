@@ -6,7 +6,6 @@ import time
 correo_bp = Blueprint('correo', __name__)
 
 def enviar_correos(socketio, correos, asunto, mensaje, archivo_imagen=None):
-    # Lote de 1 correo y retraso de 5 segundos entre correos
     batch_size = 180
     delay_seconds = 1
     total_correos = len(correos)
